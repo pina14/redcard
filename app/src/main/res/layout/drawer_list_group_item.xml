@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                                             android:id="@+id/menu_group_item_layout">
+    <TextView
+            android:text="TextView"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:textSize="12sp"
+            android:textColor="?attr/secondaryTextColor"
+            android:id="@+id/group_item_text"
+            android:textStyle="bold"
+            android:paddingStart="?android:attr/expandableListPreferredChildPaddingLeft"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:gravity="center_vertical"/>
+
+</android.support.constraint.ConstraintLayout>

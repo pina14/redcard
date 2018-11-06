@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="menu_items">
+        <item>@string/leagues</item>
+        <item>@string/national_teams</item>
+    </string-array>
+
+    <string-array name="menu_leagues_childs">
+        <item>liga 1</item>
+        <item>liga 2</item>
+        <item>liga 3</item>
+    </string-array>
+
+    <string-array name="menu_national_childs">
+        <item>National 1</item>
+        <item>National 2</item>
+    </string-array>
+</resources>

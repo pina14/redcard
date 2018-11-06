@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CIAppTheme">
+        <attr name="primaryColor1" format="color"/>
+        <attr name="primaryColor2" format="color"/>
+        <attr name="primaryColor3" format="color"/>
+        <attr name="secondaryColor1" format="color"/>
+        <attr name="secondaryColor2" format="color"/>
+        <attr name="secondaryColor3" format="color"/>
+        <attr name="primaryTextColor" format="color"/>
+        <attr name="secondaryTextColor" format="color"/>
+        <attr name="tertiaryTextColor" format="color"/>
+        <attr name="backgroundColor" format="color"/>
+        <attr name="drawerIconColor" format="color"/>
+    </declare-styleable>
+</resources>

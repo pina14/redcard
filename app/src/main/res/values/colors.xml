@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="buttonColor">#1b3b46</color>
+
+    <!--Theme Colors Light-->
+    <color name="lightPrimaryColor1">#003d00</color>
+    <color name="lightPrimaryColor2">#33691e</color>
+    <color name="lightPrimaryColor3">#629749</color>
+    <color name="lightSecondaryColor1">#8d8d8d</color>
+    <color name="lightSecondaryColor2">#bdbdbd</color>
+    <color name="lightSecondaryColor3">#efefef</color>
+    <color name="lightPrimaryTextColor">#000000</color>
+    <color name="lightSecondaryTextColor">#629749</color>
+    <color name="lightTertiaryTextColor">#ffffff</color>
+    <color name="lightBackgroundColor">#e0e0e0</color>
+    <color name="lightColorAccent">#629749</color>
+    <color name="lightDrawerIconColor">#546E7A</color>
+
+
+    <!--Theme Colors Dark-->
+    <color name="darkPrimaryColor1">#000000</color>
+    <color name="darkPrimaryColor2">#263238</color>
+    <color name="darkPrimaryColor3">#37474F</color>
+    <color name="darkSecondaryColor1">#28292e</color>
+    <color name="darkSecondaryColor2">#546E7A</color>
+    <color name="darkSecondaryColor3">#37474F</color>
+    <color name="darkPrimaryTextColor">#FFFFFF</color>
+    <color name="darkSecondaryTextColor">#629749</color>
+    <color name="darkTertiaryTextColor">#607D8B</color>
+    <color name="darkBackgroundColor">#28292e</color>
+    <color name="darkColorAccent">#78909C</color>
+    <color name="darkDrawerIconColor">#546E7A</color>
+
+    <!--Component Colors-->
+    <color name="buyColor">#8bc34a</color>
+    <color name="sellColor">#dd2c00</color>
+    <color name="movementColor">#ff9800</color>
+    <color name="upColor">#8bc34a</color>
+    <color name="downColor">#dd2c00</color>
+    <color name="fav_color">#feaa0c</color>
+</resources>

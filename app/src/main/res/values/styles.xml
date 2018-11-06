@@ -1,0 +1,149 @@
+<resources>
+
+    <style name="CIButton" parent="@android:style/Widget.Button">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@color/buttonColor</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppCompat.FullScreen" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="colorPrimaryDark">@color/lightPrimaryColor1</item>
+        <item name="android:textColorPrimary">@color/lightPrimaryTextColor</item>
+        <item name="android:textColorSecondary">@color/lightSecondaryTextColor</item>
+    </style>
+
+    <style name="DialogThemeLight" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/lightColorAccent</item>
+        <item name="android:windowBackground">@color/lightBackgroundColor</item>
+
+    </style>
+
+    <style name="DialogThemeDark" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/darkColorAccent</item>
+        <item name="android:windowBackground">@color/darkBackgroundColor</item>
+    </style>
+
+    <!-- Light base activity theme no action bar -->
+    <style name="CIActivityThemeLightNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="primaryColor1">@color/lightPrimaryColor1</item>
+        <item name="primaryColor2">@color/lightPrimaryColor2</item>
+        <item name="primaryColor3">@color/lightPrimaryColor3</item>
+        <item name="secondaryColor1">@color/lightSecondaryColor1</item>
+        <item name="secondaryColor2">@color/lightSecondaryColor2</item>
+        <item name="secondaryColor3">@color/lightSecondaryColor3</item>
+        <item name="android:textColor">@color/lightPrimaryTextColor</item>
+        <item name="primaryTextColor">@color/lightPrimaryTextColor</item>
+        <item name="secondaryTextColor">@color/lightSecondaryTextColor</item>
+        <item name="tertiaryTextColor">@color/lightTertiaryTextColor</item>
+        <item name="backgroundColor">@color/lightBackgroundColor</item>
+        <item name="drawerIconColor">@color/lightDrawerIconColor</item>
+
+        <item name="android:colorBackground">@color/lightBackgroundColor</item>
+        <item name="android:colorForeground">@color/lightSecondaryColor3</item>
+        <item name="android:textColorPrimary">@color/lightPrimaryTextColor</item>
+        <item name="android:textColorPrimaryInverse">@color/lightTertiaryTextColor</item>
+        <item name="android:textColorSecondary">@color/lightSecondaryTextColor</item>
+        <item name="android:textColorSecondaryInverse">@color/lightSecondaryTextColor</item>
+        <item name="android:windowBackground">@color/lightBackgroundColor</item>
+        <item name="android:buttonStyle">@style/CIButton</item>
+        <item name="android:dialogTheme">@style/DialogThemeLight</item>
+        <item name="android:popupBackground">@color/lightBackgroundColor</item>
+        <item name="colorPrimary">@color/lightPrimaryColor2</item>
+        <item name="colorPrimaryDark">@color/lightPrimaryColor1</item>
+        <item name="colorAccent">@color/lightColorAccent</item>
+    </style>
+
+    <!-- Light base activity theme with action bar -->
+    <style name="CIActivityThemeLightWithActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="primaryColor1">@color/lightPrimaryColor1</item>
+        <item name="primaryColor2">@color/lightPrimaryColor2</item>
+        <item name="primaryColor3">@color/lightPrimaryColor3</item>
+        <item name="secondaryColor1">@color/lightSecondaryColor1</item>
+        <item name="secondaryColor2">@color/lightSecondaryColor2</item>
+        <item name="secondaryColor3">@color/lightSecondaryColor3</item>
+        <item name="android:textColor">@color/lightPrimaryTextColor</item>
+        <item name="primaryTextColor">@color/lightPrimaryTextColor</item>
+        <item name="secondaryTextColor">@color/lightSecondaryTextColor</item>
+        <item name="tertiaryTextColor">@color/lightTertiaryTextColor</item>
+        <item name="backgroundColor">@color/lightBackgroundColor</item>
+        <item name="drawerIconColor">@color/lightDrawerIconColor</item>
+
+        <item name="android:colorBackground">@color/lightBackgroundColor</item>
+        <item name="android:colorForeground">@color/lightSecondaryColor3</item>
+        <item name="android:textColorPrimary">@color/lightPrimaryTextColor</item>
+        <item name="android:textColorPrimaryInverse">@color/lightTertiaryTextColor</item>
+        <item name="android:textColorSecondary">@color/lightSecondaryTextColor</item>
+        <item name="android:textColorSecondaryInverse">@color/lightSecondaryTextColor</item>
+        <item name="android:windowBackground">@color/lightBackgroundColor</item>
+        <item name="android:buttonStyle">@style/CIButton</item>
+        <item name="android:dialogTheme">@style/DialogThemeLight</item>
+        <item name="android:popupBackground">@color/lightBackgroundColor</item>
+        <item name="colorPrimary">@color/lightPrimaryColor2</item>
+        <item name="colorPrimaryDark">@color/lightPrimaryColor1</item>
+        <item name="colorAccent">@color/lightColorAccent</item>
+    </style>
+
+    <!-- Dark base activity theme no action bar -->
+    <style name="CIActivityThemeDarkNoActionBar" parent="Theme.AppCompat.NoActionBar">
+        <item name="primaryColor1">@color/darkPrimaryColor1</item>
+        <item name="primaryColor2">@color/darkPrimaryColor2</item>
+        <item name="primaryColor3">@color/darkPrimaryColor3</item>
+        <item name="secondaryColor1">@color/darkSecondaryColor1</item>
+        <item name="secondaryColor2">@color/darkSecondaryColor2</item>
+        <item name="secondaryColor3">@color/darkSecondaryColor3</item>
+        <item name="android:textColor">@color/darkPrimaryTextColor</item>
+        <item name="primaryTextColor">@color/darkPrimaryTextColor</item>
+        <item name="secondaryTextColor">@color/darkSecondaryTextColor</item>
+        <item name="tertiaryTextColor">@color/darkTertiaryTextColor</item>
+        <item name="backgroundColor">@color/darkBackgroundColor</item>
+        <item name="drawerIconColor">@color/darkDrawerIconColor</item>
+
+        <item name="colorPrimary">@color/darkPrimaryColor2</item>
+        <item name="colorPrimaryDark">@color/darkPrimaryColor1</item>
+        <item name="colorAccent">@color/darkColorAccent</item>
+        <item name="android:colorBackground">@color/darkBackgroundColor</item>
+        <item name="android:colorForeground">@color/darkBackgroundColor</item>
+        <item name="android:textColorPrimary">@color/darkPrimaryTextColor</item>
+        <item name="android:textColorPrimaryInverse">@color/darkTertiaryTextColor</item>
+        <item name="android:textColorSecondary">@color/darkSecondaryTextColor</item>
+        <item name="android:textColorSecondaryInverse">@color/darkSecondaryTextColor</item>
+        <item name="android:windowBackground">@color/darkBackgroundColor</item>
+        <item name="android:buttonStyle">@style/CIButton</item>
+        <item name="android:dialogTheme">@style/DialogThemeDark</item>
+        <item name="android:popupBackground">@color/darkBackgroundColor</item>
+    </style>
+
+    <!-- Dark base activity theme with action bar -->
+    <style name="CIActivityThemeDarkWithActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="primaryColor1">@color/darkPrimaryColor1</item>
+        <item name="primaryColor2">@color/darkPrimaryColor2</item>
+        <item name="primaryColor3">@color/darkPrimaryColor3</item>
+        <item name="secondaryColor1">@color/darkSecondaryColor1</item>
+        <item name="secondaryColor2">@color/darkSecondaryColor2</item>
+        <item name="secondaryColor3">@color/darkSecondaryColor3</item>
+        <item name="android:textColor">@color/darkPrimaryTextColor</item>
+        <item name="primaryTextColor">@color/darkPrimaryTextColor</item>
+        <item name="secondaryTextColor">@color/darkSecondaryTextColor</item>
+        <item name="tertiaryTextColor">@color/darkTertiaryTextColor</item>
+        <item name="backgroundColor">@color/darkBackgroundColor</item>
+        <item name="drawerIconColor">@color/darkDrawerIconColor</item>
+
+        <item name="colorPrimary">@color/darkPrimaryColor2</item>
+        <item name="colorPrimaryDark">@color/darkPrimaryColor1</item>
+        <item name="colorAccent">@color/darkColorAccent</item>
+        <item name="android:colorBackground">@color/darkBackgroundColor</item>
+        <item name="android:colorForeground">@color/darkBackgroundColor</item>
+        <item name="android:textColorPrimary">@color/darkPrimaryTextColor</item>
+        <item name="android:textColorPrimaryInverse">@color/darkTertiaryTextColor</item>
+        <item name="android:textColorSecondary">@color/darkSecondaryTextColor</item>
+        <item name="android:textColorSecondaryInverse">@color/darkSecondaryTextColor</item>
+        <item name="android:windowBackground">@color/darkBackgroundColor</item>
+        <item name="android:buttonStyle">@style/CIButton</item>
+        <item name="android:dialogTheme">@style/DialogThemeDark</item>
+        <item name="android:popupBackground">@color/darkBackgroundColor</item>
+    </style>
+</resources>

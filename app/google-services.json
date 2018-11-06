@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "274166975643",
+    "firebase_url": "https://redcard-f6f48.firebaseio.com",
+    "project_id": "redcard-f6f48",
+    "storage_bucket": "redcard-f6f48.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:274166975643:android:40df95374bc47896",
+        "android_client_info": {
+          "package_name": "appdev.pina.redcard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "274166975643-plj7o7c5elr8iil9aoa2nmcv7vg2qs3s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "appdev.pina.redcard",
+            "certificate_hash": "d38a9797a73b7ab30ecfd2d89f99dfdd22e59ed5"
+          }
+        },
+        {
+          "client_id": "274166975643-iou3h4ltb5uroqdst3rrsifaloqolk9g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACMrAq2159M638ltbO1JFJHXUV1TRHVZM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "274166975643-iou3h4ltb5uroqdst3rrsifaloqolk9g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

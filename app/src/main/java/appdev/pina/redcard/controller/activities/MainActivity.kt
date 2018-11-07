@@ -1,8 +1,9 @@
-package appdev.pina.redcard
+package appdev.pina.redcard.controller.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.NavigationView
+import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -11,15 +12,21 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import android.widget.ExpandableListAdapter
 import android.widget.Toast
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import appdev.pina.redcard.R
+import appdev.pina.redcard.controller.fragments.FavsFragment
+import appdev.pina.redcard.controller.fragments.PreviousFragment
+import appdev.pina.redcard.controller.fragments.TodayFragment
+import appdev.pina.redcard.model.DrawerExpandableListListener
+import appdev.pina.redcard.model.MenuModel
+import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.drawer_content_layout.*
+import kotlinx.coroutines.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
-    var expandableListAdapter: ExpandableListAdapter? = null
-    var headerList: ArrayList<MenuModel> = ArrayList()
-    var childList: HashMap<MenuModel, List<MenuModel>> = HashMap()
+    private var expandableListAdapter: ExpandableListAdapter? = null
+    private var headerList: ArrayList<MenuModel> = ArrayList()
+    private var childList: HashMap<MenuModel, List<MenuModel>> = HashMap()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,12 +37,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         populateExpandableList()
 
         val toggle = ActionBarDrawerToggle(
-            this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            this, drawer_layout, toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
-        nav_view.setNavigationItemSelectedListener(this)
+        bottomNavigationView.setOnNavigationItemSelectedListener(this)
+        bottomNavigationView.selectedItemId = R.id.favorites
     }
 
     private var backPressedBefore = false
@@ -57,10 +67,30 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        @Suppress("UNCHECKED_CAST")
+        when(item.itemId) {
+            R.id.favorites -> showFragment(FavsFragment::class.java as Class<Fragment>)
+            R.id.today -> showFragment(TodayFragment::class.java as Class<Fragment>)
+            R.id.previous -> showFragment(PreviousFragment::class.java as Class<Fragment>)
+        }
+
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun showFragment(clazz : Class<Fragment>) {
+        //locate fragment by tag if this already exists
+        var fragment = supportFragmentManager.findFragmentByTag(clazz.canonicalName)
+
+        // If fragment doesn't exist yet, create one
+        if (fragment == null)
+            fragment = Fragment.instantiate(this, clazz.name)
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_content_frame, fragment, clazz.canonicalName)
+            .addToBackStack(null)
+            .commitAllowingStateLoss()
     }
 
     private fun prepareMenuData() {
@@ -76,9 +106,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         //prepare childs
-        val menuLeaguesChild1 = MenuModel("Liga 1", R.drawable.ic_menu_camera, false, LeagueActivity::class.java)
-        val menuLeaguesChild2 = MenuModel("Liga 2", R.drawable.ic_menu_gallery, false, LeagueActivity::class.java)
-        val menuLeaguesChild3 = MenuModel("Liga 3", R.drawable.ic_menu_camera, false, LeagueActivity::class.java)
+        val menuLeaguesChild1 =
+            MenuModel("Liga 1",
+                R.drawable.ic_menu_camera, false, LeagueActivity::class.java)
+        val menuLeaguesChild2 =
+            MenuModel("Liga 2",
+                R.drawable.ic_menu_gallery, false, LeagueActivity::class.java)
+        val menuLeaguesChild3 =
+            MenuModel("Liga 3",
+                R.drawable.ic_menu_camera, false, LeagueActivity::class.java)
         val menuLeaguesList = ArrayList<MenuModel>()
         menuLeaguesList.apply {
             add(menuLeaguesChild1)
@@ -86,8 +122,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             add(menuLeaguesChild3)
         }
 
-        val menuNationalTeamsChild1 = MenuModel("National Team 1", R.drawable.ic_menu_gallery, false, NationalTeamActivity::class.java)
-        val menuNationalTeamsChild2 = MenuModel("National Team 2", R.drawable.ic_menu_camera, false, NationalTeamActivity::class.java)
+        val menuNationalTeamsChild1 = MenuModel(
+            "National Team 1",
+            R.drawable.ic_menu_gallery,
+            false,
+            NationalTeamActivity::class.java
+        )
+        val menuNationalTeamsChild2 = MenuModel(
+            "National Team 2",
+            R.drawable.ic_menu_camera,
+            false,
+            NationalTeamActivity::class.java
+        )
         val menuNationalTeamsList = ArrayList<MenuModel>()
         menuNationalTeamsList.apply {
             add(menuNationalTeamsChild1)

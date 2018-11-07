@@ -1,10 +1,11 @@
-package appdev.pina.redcard
+package appdev.pina.redcard.model
 
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.view.LayoutInflater
+import appdev.pina.redcard.R
 import kotlinx.android.synthetic.main.drawer_list_child_item.view.*
 import kotlinx.android.synthetic.main.drawer_list_group_item.view.*
 

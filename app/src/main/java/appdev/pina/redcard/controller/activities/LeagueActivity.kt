@@ -1,7 +1,8 @@
-package appdev.pina.redcard
+package appdev.pina.redcard.controller.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import appdev.pina.redcard.R
 
 class LeagueActivity : AppCompatActivity() {
 

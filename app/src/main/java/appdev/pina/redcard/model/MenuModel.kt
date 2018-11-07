@@ -1,4 +1,6 @@
-package appdev.pina.redcard
+package appdev.pina.redcard.model
+
+import appdev.pina.redcard.controller.activities.MainActivity
 
 /**
  * Created by Hugo on 06/11/2018

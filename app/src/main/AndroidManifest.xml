@@ -10,18 +10,17 @@
             android:supportsRtl="true"
             android:theme="@style/CIActivityThemeDarkWithActionBar">
         <activity
-                android:name=".MainActivity"
+                android:name=".controller.activities.MainActivity"
                 android:label="@string/title_activity_main"
                 android:theme="@style/CIActivityThemeDarkNoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".LeagueActivity">
+        <activity android:name=".controller.activities.LeagueActivity">
         </activity>
-        <activity android:name=".NationalTeamActivity">
+        <activity android:name=".controller.activities.NationalTeamActivity">
         </activity>
     </application>
 

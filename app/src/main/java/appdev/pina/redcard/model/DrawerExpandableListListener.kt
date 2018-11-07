@@ -42,6 +42,16 @@ class DrawerExpandableListListener(
             convertView = inflater.inflate(R.layout.drawer_list_group_item, null)
         }
 
+        if(!header.isGroup)
+            convertView?.group_item_expand_icon?.visibility = View.INVISIBLE
+        else
+            convertView?.group_item_expand_icon?.visibility = View.VISIBLE
+
+        if(isExpanded)
+            convertView?.group_item_expand_icon?.setImageResource(R.drawable.arrow_up)
+        else
+            convertView?.group_item_expand_icon?.setImageResource(R.drawable.arrow_down)
+
         convertView?.group_item_text?.text = header.name
         return convertView!!
     }

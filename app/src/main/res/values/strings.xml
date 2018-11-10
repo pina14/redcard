@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Redcard</string>
-    <string name="title_activity_main">Main Activity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -12,4 +11,6 @@
     <!--Component strings-->
     <string name="leagues">Leagues</string>
     <string name="national_teams">National Teams</string>
+    <string name="title_activity_signup">Sign Up</string>
+    <string name="title_activity_login">Login</string>
 </resources>

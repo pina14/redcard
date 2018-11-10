@@ -17,11 +17,7 @@ class DrawerExpandableListListener(
     override fun getGroupCount(): Int = listDataHeader.size
 
     override fun getChildrenCount(groupPosition: Int): Int {
-        var childCount = 0
-        if (groupPosition != 2) {
-            childCount = this.listChildData[this.listDataHeader[groupPosition]]?.size ?: 0
-        }
-        return childCount
+        return listChildData[listDataHeader[groupPosition]]?.size ?: 0
     }
 
     override fun getGroup(groupPosition: Int) : MenuModel = listDataHeader[groupPosition]

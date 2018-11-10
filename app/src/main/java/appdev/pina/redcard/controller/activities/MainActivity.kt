@@ -18,6 +18,7 @@ import appdev.pina.redcard.controller.fragments.PreviousFragment
 import appdev.pina.redcard.controller.fragments.TodayFragment
 import appdev.pina.redcard.model.DrawerExpandableListListener
 import appdev.pina.redcard.model.MenuModel
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.drawer_content_layout.*
 import kotlinx.coroutines.*
@@ -27,11 +28,15 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private var expandableListAdapter: ExpandableListAdapter? = null
     private var headerList: ArrayList<MenuModel> = ArrayList()
     private var childList: HashMap<MenuModel, List<MenuModel>> = HashMap()
+    private lateinit var firebaseAuth: FirebaseAuth
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        firebaseAuth = FirebaseAuth.getInstance()
 
         prepareMenuData()
         populateExpandableList()
@@ -95,54 +100,43 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     private fun prepareMenuData() {
         //prepare headers
-        val menuLeagues = MenuModel("Leagues", R.drawable.ic_menu_camera, true)
-        val menuNationalTeams = MenuModel("National Teams", R.drawable.ic_menu_gallery, true)
-        val menuAbout = MenuModel("About", R.drawable.ic_menu_send, false)
+        val session = MenuModel("Session", R.drawable.common_google_signin_btn_icon_dark, true)
+        val menuAbout = MenuModel("Home", R.drawable.ic_menu_send, false, Runnable {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        })
 
         headerList.apply {
-            add(menuLeagues)
-            add(menuNationalTeams)
             add(menuAbout)
+            add(session)
         }
 
         //prepare childs
-        val menuLeaguesChild1 =
-            MenuModel("Liga 1",
-                R.drawable.ic_menu_camera, false, LeagueActivity::class.java)
-        val menuLeaguesChild2 =
-            MenuModel("Liga 2",
-                R.drawable.ic_menu_gallery, false, LeagueActivity::class.java)
-        val menuLeaguesChild3 =
-            MenuModel("Liga 3",
-                R.drawable.ic_menu_camera, false, LeagueActivity::class.java)
-        val menuLeaguesList = ArrayList<MenuModel>()
-        menuLeaguesList.apply {
-            add(menuLeaguesChild1)
-            add(menuLeaguesChild2)
-            add(menuLeaguesChild3)
-        }
+        val menuSessionLogin = MenuModel("Login", R.drawable.log_in_out, false, Runnable {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        })
+        val menuSessionSignup = MenuModel("Sign up",android.R.drawable.ic_input_add, false, Runnable {
+            val intent = Intent(this, SignupActivity::class.java)
+            startActivity(intent)
+        })
 
-        val menuNationalTeamsChild1 = MenuModel(
-            "National Team 1",
-            R.drawable.ic_menu_gallery,
-            false,
-            NationalTeamActivity::class.java
-        )
-        val menuNationalTeamsChild2 = MenuModel(
-            "National Team 2",
-            R.drawable.ic_menu_camera,
-            false,
-            NationalTeamActivity::class.java
-        )
-        val menuNationalTeamsList = ArrayList<MenuModel>()
-        menuNationalTeamsList.apply {
-            add(menuNationalTeamsChild1)
-            add(menuNationalTeamsChild2)
+        val menuSessionLogout = MenuModel("Log out",R.drawable.log_in_out, false, Runnable {
+            firebaseAuth.signOut()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        })
+        val menuSessionList = ArrayList<MenuModel>()
+        menuSessionList.apply {
+            if(firebaseAuth.currentUser == null) {
+                add(menuSessionLogin)
+                add(menuSessionSignup)
+            } else
+                add(menuSessionLogout)
         }
 
         childList.let { list ->
-            list[menuLeagues] = menuLeaguesList
-            list[menuNationalTeams] = menuNationalTeamsList
+            list[session] = menuSessionList
         }
     }
 
@@ -153,9 +147,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         expandableListView.setOnGroupClickListener { parent, v, groupPosition, id ->
             val menuItem = headerList[groupPosition]
             if (!menuItem.isGroup) {
-                val intent = Intent(this, menuItem.cls)
-                startActivity(intent)
-                finish()
+                menuItem.command?.run()
             }
             false
         }
@@ -164,9 +156,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             val child = childList[headerList[groupPosition]]
             if (child != null) {
                 val item = child[childPosition]
-                val intent = Intent(this, item.cls)
-                startActivity(intent)
-                finish()
+                item.command?.run()
             }
 
             false

@@ -4,24 +4,37 @@
 
     <application
             android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/redcard_logo"
             android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_launcher_round"
+            android:roundIcon="@drawable/redcard_logo"
             android:supportsRtl="true"
             android:theme="@style/CIActivityThemeDarkWithActionBar">
         <activity
                 android:name=".controller.activities.MainActivity"
-                android:label="@string/title_activity_main"
                 android:theme="@style/CIActivityThemeDarkNoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".controller.activities.LeagueActivity">
+        <activity
+                android:name=".controller.activities.SignupActivity"
+                android:label="@string/title_activity_signup"
+                android:parentActivityName=".controller.activities.MainActivity"
+                android:theme="@style/CIActivityThemeDarkNoActionBar">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="appdev.pina.redcard.controller.activities.MainActivity"/>
         </activity>
-        <activity android:name=".controller.activities.NationalTeamActivity">
+        <activity
+                android:name=".controller.activities.LoginActivity"
+                android:label="@string/title_activity_login"
+                android:parentActivityName=".controller.activities.MainActivity"
+                android:theme="@style/CIActivityThemeDarkNoActionBar">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="appdev.pina.redcard.controller.activities.MainActivity"/>
         </activity>
     </application>
-
 </manifest>

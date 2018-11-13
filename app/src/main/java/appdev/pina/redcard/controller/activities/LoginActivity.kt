@@ -7,9 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Patterns
 import android.view.View
 import appdev.pina.redcard.R
+import appdev.pina.redcard.controller.App
+import appdev.pina.redcard.model.SignedUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.firestore.FirebaseFirestore
 
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.content_login.*
@@ -56,8 +59,20 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             login_progress_bar.visibility = View.GONE
 
-            if(task.isSuccessful)
+            if(task.isSuccessful) {
                 Snackbar.make(login_layout, "Logged in!", Snackbar.LENGTH_LONG).show()
+
+                FirebaseFirestore.getInstance()
+                    .collection("users")
+                    .whereEqualTo("email", firebaseAuth.currentUser?.email)
+                    .get().addOnCompleteListener { userTask ->
+                        if(userTask.isSuccessful && userTask.result != null) {
+                            val docs = userTask.result!!.documents
+                            if(docs.isNotEmpty())
+                                App.signedUser = docs[0].toObject(SignedUser::class.java)
+                        }
+                    }
+            }
             else {
                 if(task.exception is FirebaseAuthInvalidUserException ||
                     task.exception is FirebaseAuthInvalidCredentialsException)

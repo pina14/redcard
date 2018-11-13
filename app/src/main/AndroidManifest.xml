@@ -3,6 +3,7 @@
           package="appdev.pina.redcard">
 
     <application
+            android:name=".controller.App"
             android:allowBackup="true"
             android:icon="@drawable/redcard_logo"
             android:label="@string/app_name"
@@ -11,7 +12,7 @@
             android:theme="@style/CIActivityThemeDarkWithActionBar">
         <activity
                 android:name=".controller.activities.MainActivity"
-                android:theme="@style/CIActivityThemeDarkNoActionBar">
+                android:theme="@style/CIActivityThemeDarkWithActionBar.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -37,4 +38,5 @@
                     android:value="appdev.pina.redcard.controller.activities.MainActivity"/>
         </activity>
     </application>
+
 </manifest>

@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
 import android.util.Patterns
 import android.view.View
+import android.view.WindowManager
 import appdev.pina.redcard.R
 import appdev.pina.redcard.controller.App
 import appdev.pina.redcard.model.SignedUser
@@ -13,7 +14,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.firestore.FirebaseFirestore
-
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.content_login.*
 
@@ -55,9 +55,12 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             return
 
         login_progress_bar.visibility = View.VISIBLE
+        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
 
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             login_progress_bar.visibility = View.GONE
+            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
             if(task.isSuccessful) {
                 Snackbar.make(login_layout, "Logged in!", Snackbar.LENGTH_LONG).show()
@@ -70,6 +73,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                             val docs = userTask.result!!.documents
                             if(docs.isNotEmpty())
                                 App.signedUser = docs[0].toObject(SignedUser::class.java)
+
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                            finish()
                         }
                     }
             }
@@ -80,6 +87,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 else
                     Snackbar.make(login_layout, "Error logging in!", Snackbar.LENGTH_LONG).show()
             }
+        }.addOnFailureListener {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+            login_progress_bar.visibility = View.GONE
+            Snackbar.make(login_layout, "Error creating user!", Snackbar.LENGTH_LONG).show()
         }
     }
 

@@ -7,11 +7,21 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_drawer">DrawerActivity</string>
+    <string name="title_activity_signup">Sign Up</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_profile">Profile</string>
+    <string name="title_activity_referral">Referral Gift</string>
 
     <!--Component strings-->
     <string name="leagues">Leagues</string>
     <string name="national_teams">National Teams</string>
-    <string name="title_activity_signup">Sign Up</string>
-    <string name="title_activity_login">Login</string>
-    <string name="title_activity_profile">Profile</string>
+    <string name="copy_referral_string">Copy Referral</string>
+    <string name="referral_string">Referral:</string>
+    <string name="congratulations_string">Congratulations!</string>
+    <string name="referral_explanation_string">After you create an account, you\'ll receive a bonus for being referred
+        by other user.
+    </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

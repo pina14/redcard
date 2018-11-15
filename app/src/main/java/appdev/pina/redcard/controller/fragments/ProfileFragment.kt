@@ -1,7 +1,11 @@
 package appdev.pina.redcard.controller.fragments
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -34,10 +38,20 @@ class ProfileFragment : Fragment() {
             firebaseAuth.signOut()
             activity?.startActivity(Intent(context, MainActivity::class.java))
             activity?.finish()
+            return
         }
 
-        username_text.text = user?.username
-        email_text.text = user?.email
-        user_balance_value.text = user?.balance.toString()
+        username_text.text = user.username
+        email_text.text = user.email
+        user_balance_value.text = user.balance.toString()
+        referral_value.text = user.referralLink
+
+        copy_referral_button.setOnClickListener {
+            val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("Referral", user.referralLink)
+            clipboard.primaryClip = clip
+
+            Snackbar.make(profile_layout, "Copied referral!", Snackbar.LENGTH_SHORT).show()
+        }
     }
 }

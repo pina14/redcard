@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="appdev.pina.redcard">
-
+          xmlns:tools="http://schemas.android.com/tools" package="appdev.pina.redcard">
     <application
             android:name=".controller.App"
             android:allowBackup="true"
@@ -36,6 +35,25 @@
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="appdev.pina.redcard.controller.activities.MainActivity"/>
+        </activity>
+        <activity
+                android:name=".controller.activities.ReferralActivity"
+                android:label="@string/title_activity_referral"
+                android:theme="@style/CIActivityThemeDarkWithActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="redcard.pina.appdev" android:scheme="http"/>
+                <data android:host="redcard.pina.appdev" android:scheme="https"/>
+            </intent-filter>
+            <intent-filter android:autoVerify="true" tools:targetApi="m">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="redcardapp.page.link" android:scheme="http"/>
+                <data android:host="redcardapp.page.link" android:scheme="https"/>
+            </intent-filter>
         </activity>
     </application>
 

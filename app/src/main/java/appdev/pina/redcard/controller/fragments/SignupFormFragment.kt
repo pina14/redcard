@@ -128,19 +128,16 @@ class SignupFormFragment : Fragment() {
     }
 
     private fun generateReferral(username: String, cb : (String) -> Unit) {
-        val link = "https://redcard.pina.appdev/?referredBy=$username"
+        val link = "https://play.google.com/store/apps/details?id=appdev.pina.redcard&referredBy=$username"
         FirebaseDynamicLinks.getInstance().createDynamicLink()
             .setLink(Uri.parse(link))
             .setDomainUriPrefix("https://redcardapp.page.link")
             .setAndroidParameters(
-                DynamicLink.AndroidParameters.Builder("redcard.pina.android")
-                    .setMinimumVersion(1)
-                    .build()
-            )
-            .buildShortDynamicLink()
+                DynamicLink.AndroidParameters.Builder().setMinimumVersion(4).build()
+            ).buildShortDynamicLink()
             .addOnSuccessListener { shortDynamicLink ->
                 cb(shortDynamicLink.shortLink.toString())
-            }.addOnFailureListener { ex ->
+            }.addOnFailureListener {
                 activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                 signup_progress_bar.visibility = View.GONE
                 firebaseAuth.signOut()

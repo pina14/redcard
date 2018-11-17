@@ -108,12 +108,12 @@ class SignupFormFragment : Fragment() {
     }
 
     private fun generateReferral(username: String, cb : (String) -> Unit) {
-        val link = "https://hugofora.wixsite.com/crypto-imperium-app/?referredBy=$username"
+        val link = "https://hugofora.wixsite.com/crypto-imperium-app/?${ReferralActivity.REFERRED_BY_LABEL}=$username"
         FirebaseDynamicLinks.getInstance().createDynamicLink()
             .setLink(Uri.parse(link))
             .setDomainUriPrefix("https://redcardapp.page.link")
             .setAndroidParameters(
-                DynamicLink.AndroidParameters.Builder().setMinimumVersion(7).build()
+                DynamicLink.AndroidParameters.Builder().setMinimumVersion(8).build()
             ).buildShortDynamicLink()
             .addOnSuccessListener { shortDynamicLink ->
                 cb(shortDynamicLink.shortLink.toString())

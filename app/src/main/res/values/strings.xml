@@ -21,7 +21,4 @@
     <string name="referral_explanation_string">After you create an account, you\'ll receive a bonus for being referred
         by other user.
     </string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

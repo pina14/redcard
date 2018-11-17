@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools" package="appdev.pina.redcard">
+          package="appdev.pina.redcard">
+
     <application
             android:name=".controller.App"
             android:allowBackup="true"
@@ -10,13 +11,36 @@
             android:supportsRtl="true"
             android:theme="@style/CIActivityThemeDarkWithActionBar">
         <activity
-                android:name=".controller.activities.MainActivity"
-                android:theme="@style/CIActivityThemeDarkWithActionBar.NoActionBar">
+                android:name=".controller.activities.SplashScreenActivity"
+                android:theme="@style/AppCompat.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                        android:host="redcardapp.page.link"
+                        android:scheme="http"/>
+                <data
+                        android:host="redcardapp.page.link"
+                        android:scheme="https"/>
+                <data
+                        android:host="hugofora.wixsite.com/crypto-imperium-app"
+                        android:scheme="http"/>
+                <data
+                        android:host="hugofora.wixsite.com/crypto-imperium-app"
+                        android:scheme="https"/>
+            </intent-filter>
+        </activity>
+        <activity
+                android:name=".controller.activities.MainActivity"
+                android:theme="@style/CIActivityThemeDarkNoActionBar">
         </activity>
         <activity
                 android:name=".controller.activities.SignupActivity"
@@ -40,15 +64,6 @@
                 android:name=".controller.activities.ReferralActivity"
                 android:label="@string/title_activity_referral"
                 android:theme="@style/CIActivityThemeDarkWithActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:host="redcardapp.page.link" android:scheme="http"/>
-                <data android:host="redcardapp.page.link" android:scheme="https"/>
-                <data android:host="hugofora.wixsite.com/crypto-imperium-app" android:scheme="http"/>
-                <data android:host="hugofora.wixsite.com/crypto-imperium-app" android:scheme="https"/>
-            </intent-filter>
         </activity>
     </application>
 

@@ -15,7 +15,6 @@ import appdev.pina.redcard.controller.fragments.ProfileFragment
 import appdev.pina.redcard.model.DrawerExpandableListListener
 import appdev.pina.redcard.model.FragmentUtils
 import appdev.pina.redcard.model.MenuModel
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.drawer_content_layout.*
@@ -28,7 +27,6 @@ class MainActivity : AppCompatActivity() {
     private var expandableListAdapter: ExpandableListAdapter? = null
     private var headerList: ArrayList<MenuModel> = ArrayList()
     private var childList: HashMap<MenuModel, List<MenuModel>> = HashMap()
-    private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +34,6 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         title = getString(R.string.app_name)
-
-        firebaseAuth = FirebaseAuth.getInstance()
 
         prepareMenuData()
         populateExpandableList()
@@ -110,19 +106,20 @@ class MainActivity : AppCompatActivity() {
             drawer_layout.closeDrawer(GravityCompat.START)
         })
         val menuSessionLogout = MenuModel("Log out",R.drawable.log_in_out, false, kotlinx.coroutines.Runnable {
-            firebaseAuth.signOut()
+            App.firebaseOps.signOutUser()
             App.signedUser = null
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         })
 
         menuSessionList.apply {
-            if(firebaseAuth.currentUser == null) {
-                add(menuSessionLogin)
-                add(menuSessionSignup)
-            } else {
+            if(App.firebaseOps.isUserLoggedIn()) {
                 add(menuSessionProfile)
                 add(menuSessionLogout)
+            }
+            else {
+                add(menuSessionLogin)
+                add(menuSessionSignup)
             }
         }
 

@@ -10,16 +10,12 @@ import android.view.WindowManager
 import appdev.pina.redcard.R
 import appdev.pina.redcard.controller.App
 import appdev.pina.redcard.model.SignedUser
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.content_login.*
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
-
-    private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +26,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         login_button.setOnClickListener(this)
         signup_text.setOnClickListener(this)
-
-        firebaseAuth = FirebaseAuth.getInstance()
     }
 
     override fun onClick(view: View) {
@@ -58,27 +52,26 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
 
-        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+        App.firebaseOps.loginUser(email, password) { task ->
             login_progress_bar.visibility = View.GONE
             window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
             if(task.isSuccessful) {
-                Snackbar.make(login_layout, "Logged in!", Snackbar.LENGTH_LONG).show()
+                App.firebaseOps.getUserWithEmail(App.firebaseOps.getUserAuth()!!.email!!) { userTask ->
+                    if(userTask.isSuccessful && userTask.result != null) {
+                        val docs = userTask.result!!.documents
+                        if(docs.isNotEmpty())
+                            App.signedUser = docs[0].toObject(SignedUser::class.java)
 
-                FirebaseFirestore.getInstance()
-                    .collection("users")
-                    .whereEqualTo("email", firebaseAuth.currentUser?.email)
-                    .get().addOnCompleteListener { userTask ->
-                        if(userTask.isSuccessful && userTask.result != null) {
-                            val docs = userTask.result!!.documents
-                            if(docs.isNotEmpty())
-                                App.signedUser = docs[0].toObject(SignedUser::class.java)
+                        Snackbar.make(login_layout, "Logged in!", Snackbar.LENGTH_LONG).show()
 
-                            val intent = Intent(this, MainActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        }
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
                     }
+                    else
+                        App.firebaseOps.signOutUser()
+                }
             }
             else {
                 if(task.exception is FirebaseAuthInvalidUserException ||
@@ -87,10 +80,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 else
                     Snackbar.make(login_layout, "Error logging in!", Snackbar.LENGTH_LONG).show()
             }
-        }.addOnFailureListener {
-            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-            login_progress_bar.visibility = View.GONE
-            Snackbar.make(login_layout, "Error creating user!", Snackbar.LENGTH_LONG).show()
         }
     }
 

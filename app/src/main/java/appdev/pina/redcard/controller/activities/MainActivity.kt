@@ -28,12 +28,14 @@ class MainActivity : AppCompatActivity() {
     private var expandableListAdapter: ExpandableListAdapter? = null
     private var headerList: ArrayList<MenuModel> = ArrayList()
     private var childList: HashMap<MenuModel, List<MenuModel>> = HashMap()
-    protected lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        title = getString(R.string.app_name)
 
         firebaseAuth = FirebaseAuth.getInstance()
 

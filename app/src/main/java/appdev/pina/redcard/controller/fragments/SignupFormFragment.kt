@@ -27,7 +27,6 @@ class SignupFormFragment : Fragment() {
 
     private val firebaseAuth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
-    private val reward : Double = 100.0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -76,24 +75,21 @@ class SignupFormFragment : Fragment() {
 
                             if(task.isSuccessful) {
                                 var referredBy : String? = null
-                                var balance = 0.0
-                                if(activity is ReferralActivity) {
+                                if(activity is ReferralActivity)
                                     referredBy = (activity as ReferralActivity).referredBy
-                                    balance = reward
+
+                                val user = SignedUser(username, 0.0, firebaseAuth.currentUser?.email ?: "", refLink, referredBy)
+                                db.collection("users").document(username).set(user).addOnCompleteListener {
+                                    App.signedUser = user
+
+                                    Snackbar.make(signup_button, "Created user!", Snackbar.LENGTH_LONG).show()
+
+                                    val intent = Intent(context, MainActivity::class.java)
+                                    startActivity(intent)
+                                    activity?.finish()
+                                }.addOnFailureListener {
+                                    Snackbar.make(signup_button, "Error creating user!", Snackbar.LENGTH_LONG).show()
                                 }
-
-                                val user = SignedUser(username, balance, firebaseAuth.currentUser?.email ?: "", refLink, referredBy)
-                                App.signedUser = user
-                                db.collection("users").document(username).set(user)
-
-                                if(referredBy != null)
-                                    distributeRewards(referredBy)
-
-                                Snackbar.make(signup_button, "Created user!", Snackbar.LENGTH_LONG).show()
-
-                                val intent = Intent(context, MainActivity::class.java)
-                                startActivity(intent)
-                                activity?.finish()
                             }
                             else {
                                 if(task.exception is FirebaseAuthUserCollisionException)
@@ -111,29 +107,13 @@ class SignupFormFragment : Fragment() {
             }
     }
 
-    private fun distributeRewards(referredBy: String) {
-        val refBy = db.collection("users").document(referredBy)
-
-        refBy.get().addOnCompleteListener { userTask ->
-                if(userTask.isSuccessful && userTask.result != null) {
-                    val doc = userTask.result
-                    if(doc != null) {
-                        val user = doc.toObject(SignedUser::class.java)
-                        user?.let {
-                            refBy.update("balance", user.balance + reward)
-                        }
-                    }
-                }
-            }
-    }
-
     private fun generateReferral(username: String, cb : (String) -> Unit) {
-        val link = "https://play.google.com/store/apps/details?id=appdev.pina.redcard&referredBy=$username"
+        val link = "https://hugofora.wixsite.com/crypto-imperium-app/?referredBy=$username"
         FirebaseDynamicLinks.getInstance().createDynamicLink()
             .setLink(Uri.parse(link))
             .setDomainUriPrefix("https://redcardapp.page.link")
             .setAndroidParameters(
-                DynamicLink.AndroidParameters.Builder().setMinimumVersion(4).build()
+                DynamicLink.AndroidParameters.Builder().setMinimumVersion(7).build()
             ).buildShortDynamicLink()
             .addOnSuccessListener { shortDynamicLink ->
                 cb(shortDynamicLink.shortLink.toString())

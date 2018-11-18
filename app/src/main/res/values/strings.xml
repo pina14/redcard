@@ -11,6 +11,7 @@
     <string name="title_activity_login">Login</string>
     <string name="title_activity_profile">Profile</string>
     <string name="title_activity_referral">Referral Gift</string>
+    <string name="title_activity_verify_email">Verify Email</string>
 
     <!--Component strings-->
     <string name="leagues">Leagues</string>
@@ -21,4 +22,11 @@
     <string name="referral_explanation_string">After you create an account, you\'ll receive a bonus for being referred
         by other user.
     </string>
+    <string name="email_verification_string">Verify your account by clicking on the link in the email sent to the email
+        specified.
+    </string>
+    <string name="email_sent_string">Email sent to %1$s</string>
+    <string name="resend_string">Resend</string>
+    <string name="continue_string">Continue</string>
+    <string name="delete_account_string">Delete account</string>
 </resources>

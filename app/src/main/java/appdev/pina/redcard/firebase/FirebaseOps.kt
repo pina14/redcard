@@ -30,11 +30,6 @@ class FirebaseOps {
 
     /********************* AUTH OPS *********************/
     /**
-     * Sign out current user
-     */
-    fun signOutUser() = firebaseAuth.signOut()
-
-    /**
      * Check if user is logged in
      */
     fun isUserLoggedIn() : Boolean = firebaseAuth.currentUser != null
@@ -59,12 +54,37 @@ class FirebaseOps {
     }
 
     /**
-     * Create new user auth
+     * Delete user auth
+     */
+    fun deleteUser(cb : (Task<Void?>) -> Unit) {
+        getUserAuth()?.delete()?.addOnCompleteListener { task ->
+            cb(task)
+        }
+    }
+
+    /**
+     * Login user
      */
     fun loginUser(email: String, password: String, cb : (Task<AuthResult>) -> Unit) {
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             cb(task)
         }
+    }
+
+    /**
+     * Sign out current user
+     */
+    fun logoutUser() = firebaseAuth.signOut()
+
+    /**
+     * Send verification email
+     */
+    fun sendVerificationEmail(cb : (Task<Void>?) -> Unit) {
+        val user = getUserAuth() ?: return cb(null)
+        user.sendEmailVerification()
+            .addOnCompleteListener { task ->
+                cb(task)
+            }
     }
 
     /********************* DB OPS *********************/

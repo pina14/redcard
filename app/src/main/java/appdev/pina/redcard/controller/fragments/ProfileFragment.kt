@@ -31,7 +31,7 @@ class ProfileFragment : Fragment() {
 
         val user = App.signedUser
         if(App.firebaseOps.isUserLoggedOut() || user == null) {
-            App.firebaseOps.signOutUser()
+            App.firebaseOps.logoutUser()
             activity?.startActivity(Intent(context, MainActivity::class.java))
             activity?.finish()
             return
@@ -48,6 +48,18 @@ class ProfileFragment : Fragment() {
             clipboard.primaryClip = clip
 
             Snackbar.make(profile_layout, "Copied referral!", Snackbar.LENGTH_SHORT).show()
+        }
+
+        delete_account_text.setOnClickListener {
+            App.firebaseOps.deleteUser { task ->
+                if(task.isSuccessful) {
+                    Intent(activity, MainActivity::class.java).also { intent ->
+                        startActivity(intent)
+                    }
+                    activity?.finish()
+                } else
+                    Snackbar.make(profile_layout, "Error deleting account!", Snackbar.LENGTH_SHORT).show()
+            }
         }
     }
 }

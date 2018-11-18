@@ -57,6 +57,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
             if(task.isSuccessful) {
+                if(task.result?.user?.isEmailVerified == false){
+                    Intent(this, VerifyEmailActivity::class.java).also { intent ->
+                        startActivity(intent)
+                        return@loginUser
+                    }
+                }
+
                 App.firebaseOps.getUserWithEmail(App.firebaseOps.getUserAuth()!!.email!!) { userTask ->
                     if(userTask.isSuccessful && userTask.result != null) {
                         val docs = userTask.result!!.documents
@@ -70,7 +77,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                         finish()
                     }
                     else
-                        App.firebaseOps.signOutUser()
+                        App.firebaseOps.logoutUser()
                 }
             }
             else {

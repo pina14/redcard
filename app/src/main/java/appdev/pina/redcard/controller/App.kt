@@ -25,7 +25,7 @@ class App : Application() {
                         signedUser = docs[0].toObject(SignedUser::class.java)
                 }
                 else
-                    firebaseOps.signOutUser()
+                    firebaseOps.logoutUser()
             }
         }
     }

@@ -12,8 +12,8 @@ import android.view.WindowManager
 import appdev.pina.redcard.R
 import appdev.pina.redcard.controller.App
 import appdev.pina.redcard.controller.activities.LoginActivity
-import appdev.pina.redcard.controller.activities.MainActivity
 import appdev.pina.redcard.controller.activities.ReferralActivity
+import appdev.pina.redcard.controller.activities.VerifyEmailActivity
 import appdev.pina.redcard.firebase.FirebaseOps
 import appdev.pina.redcard.model.SignedUser
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -68,7 +68,7 @@ class SignupFormFragment : Fragment() {
                     if(hasError) {
                         activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                         signup_progress_bar.visibility = View.GONE
-                        App.firebaseOps.signOutUser()
+                        App.firebaseOps.logoutUser()
                         Snackbar.make(signup_button, "Error generating referral link!", Snackbar.LENGTH_SHORT).show()
                     } else
                         App.firebaseOps.createUser(email, password) { task ->
@@ -87,9 +87,10 @@ class SignupFormFragment : Fragment() {
 
                                         Snackbar.make(signup_button, "Created user!", Snackbar.LENGTH_LONG).show()
 
-                                        val intent = Intent(context, MainActivity::class.java)
-                                        startActivity(intent)
-                                        activity?.finish()
+                                        Intent(context, VerifyEmailActivity::class.java).also { intent ->
+                                            startActivity(intent)
+                                            activity?.finish()
+                                        }
                                     } else
                                         Snackbar.make(signup_button, "Error creating user!", Snackbar.LENGTH_LONG).show()
                                 }

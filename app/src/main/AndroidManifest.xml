@@ -40,8 +40,7 @@
         </activity>
         <activity
                 android:name=".controller.activities.MainActivity"
-                android:theme="@style/CIActivityThemeDarkNoActionBar">
-        </activity>
+                android:theme="@style/CIActivityThemeDarkNoActionBar"/>
         <activity
                 android:name=".controller.activities.SignupActivity"
                 android:label="@string/title_activity_signup"
@@ -63,8 +62,11 @@
         <activity
                 android:name=".controller.activities.ReferralActivity"
                 android:label="@string/title_activity_referral"
-                android:theme="@style/CIActivityThemeDarkWithActionBar">
-        </activity>
+                android:theme="@style/CIActivityThemeDarkWithActionBar"/>
+        <activity
+                android:name=".controller.activities.VerifyEmailActivity"
+                android:label="@string/title_activity_verify_email"
+                android:theme="@style/CIActivityThemeDarkWithActionBar"/>
     </application>
 
 </manifest>

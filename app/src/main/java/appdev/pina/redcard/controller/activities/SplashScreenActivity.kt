@@ -21,7 +21,7 @@ class SplashScreenActivity : AppCompatActivity() {
         App.firebaseOps.getDynamicLink(intent) { deepLink ->
             if (deepLink != null && deepLink.getBooleanQueryParameter(FirebaseOps.REFERRED_BY_LABEL, false)) {
                 //sign out user to receive reward
-                App.firebaseOps.signOutUser()
+                App.firebaseOps.logoutUser()
 
                 val referredBy = deepLink.getQueryParameter(FirebaseOps.REFERRED_BY_LABEL)
 

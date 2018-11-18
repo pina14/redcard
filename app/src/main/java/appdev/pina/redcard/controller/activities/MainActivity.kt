@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity() {
             drawer_layout.closeDrawer(GravityCompat.START)
         })
         val menuSessionLogout = MenuModel("Log out",R.drawable.log_in_out, false, kotlinx.coroutines.Runnable {
-            App.firebaseOps.signOutUser()
+            App.firebaseOps.logoutUser()
             App.signedUser = null
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)

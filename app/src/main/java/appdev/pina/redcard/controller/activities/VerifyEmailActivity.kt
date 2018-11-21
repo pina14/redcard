@@ -1,6 +1,5 @@
 package appdev.pina.redcard.controller.activities
 
-import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -15,10 +14,8 @@ class VerifyEmailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_verify_email)
 
-        if(App.firebaseOps.isUserLoggedOut()) {
-            setResult(Activity.RESULT_CANCELED)
+        if(App.firebaseOps.isUserLoggedOut())
             finish()
-        }
 
         val user = App.firebaseOps.getUserAuth()!!
 

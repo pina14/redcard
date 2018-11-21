@@ -2,6 +2,7 @@ package appdev.pina.redcard.firebase
 
 import android.content.Intent
 import android.net.Uri
+import appdev.pina.redcard.controller.App
 import appdev.pina.redcard.model.SignedUser
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -9,9 +10,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.dynamiclinks.DynamicLink
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.*
 
 /**
  * Created by Hugo on 17/11/2018
@@ -25,10 +24,11 @@ class FirebaseOps {
     }
 
     private val db by lazy { FirebaseFirestore.getInstance() }
-    private val firebaseAuth by lazy { FirebaseAuth.getInstance() }
+    val firebaseAuth by lazy { FirebaseAuth.getInstance() }
     private val dynamicLinks by lazy { FirebaseDynamicLinks.getInstance() }
 
     /********************* AUTH OPS *********************/
+
     /**
      * Check if user is logged in
      */
@@ -40,6 +40,11 @@ class FirebaseOps {
     fun isUserLoggedOut() : Boolean = firebaseAuth.currentUser == null
 
     /**
+     * Check if user is logged in and has email verified
+     */
+    fun isUserLoggedInAndVerified() : Boolean = firebaseAuth.currentUser?.isEmailVerified == true
+
+    /**
      * Get current user
      */
     fun getUserAuth() : FirebaseUser? = firebaseAuth.currentUser
@@ -49,6 +54,8 @@ class FirebaseOps {
      */
     fun createUser(email: String, password: String, cb : (Task<AuthResult>) -> Unit) {
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            if(task.isSuccessful)
+                createUserListener(email)
             cb(task)
         }
     }
@@ -58,6 +65,7 @@ class FirebaseOps {
      */
     fun deleteUser(cb : (Task<Void?>) -> Unit) {
         getUserAuth()?.delete()?.addOnCompleteListener { task ->
+            userListener?.remove()
             cb(task)
         }
     }
@@ -67,14 +75,46 @@ class FirebaseOps {
      */
     fun loginUser(email: String, password: String, cb : (Task<AuthResult>) -> Unit) {
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            if(task.isSuccessful)
+                createUserListener(email)
             cb(task)
+        }
+    }
+
+    private var userListener : ListenerRegistration? = null
+    fun createUserListener(email: String) {
+        getUserWithEmail(email) { userTask ->
+            if (userTask.isSuccessful && userTask.result != null) {
+                val docs = userTask.result!!.documents
+                if (docs.isNotEmpty()) {
+                    App.setSignedUser(docs[0].toObject(SignedUser::class.java))
+
+                    userListener = db.collection(USERS_COLLECTION)
+                        .document(App.getSignedUser()?.username ?: "")
+                        .addSnapshotListener { snap, ex ->
+                            if (ex != null)
+                                return@addSnapshotListener
+
+                            if (snap != null && snap.exists()) {
+                                App.setSignedUser(snap.toObject(SignedUser::class.java))
+                            } else {
+                                logoutUser()
+                                App.setSignedUser(null)
+                            }
+                        }
+                }
+            } else
+                logoutUser()
         }
     }
 
     /**
      * Sign out current user
      */
-    fun logoutUser() = firebaseAuth.signOut()
+    fun logoutUser() {
+        userListener?.remove()
+        firebaseAuth.signOut()
+    }
 
     /**
      * Send verification email

@@ -1,5 +1,6 @@
 package appdev.pina.redcard
 
+import kotlinx.coroutines.*
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -11,7 +12,30 @@ import org.junit.Assert.*
  */
 class ExampleUnitTest {
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun test_async() {
+        var res = false
+        runBlocking {
+            val a1 = async {
+                delay(1000)
+                println("a1 async")
+
+                async {
+                    delay(2000)
+                    println("a2 async")
+                }
+                async {
+                    delay(2000)
+                    println("a3 async")
+                    res = true
+
+                }
+            }
+
+            a1.await()
+
+            assertTrue(res)
+        }
+
+        Thread.sleep(4000)
     }
 }

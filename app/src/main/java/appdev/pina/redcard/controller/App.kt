@@ -1,6 +1,7 @@
 package appdev.pina.redcard.controller
 
 import android.app.Application
+import android.arch.lifecycle.MutableLiveData
 import appdev.pina.redcard.firebase.FirebaseOps
 import appdev.pina.redcard.model.SignedUser
 
@@ -10,23 +11,19 @@ import appdev.pina.redcard.model.SignedUser
 class App : Application() {
 
     companion object {
-        var signedUser : SignedUser? = null
+         private val signedUser : MutableLiveData<SignedUser?> = MutableLiveData()
+
+        fun getUserLive() = signedUser
+        fun getSignedUser() = signedUser.value
+        fun setSignedUser(newUser : SignedUser?) {signedUser.value =  newUser}
+
         val firebaseOps = FirebaseOps()
     }
 
     override fun onCreate() {
         super.onCreate()
 
-        if(firebaseOps.isUserLoggedIn()) {
-            firebaseOps.getUserWithEmail(firebaseOps.getUserAuth()!!.email!!) { userTask ->
-                if(userTask.isSuccessful && userTask.result != null) {
-                    val docs = userTask.result!!.documents
-                    if(docs.isNotEmpty())
-                        signedUser = docs[0].toObject(SignedUser::class.java)
-                }
-                else
-                    firebaseOps.logoutUser()
-            }
-        }
+        if(firebaseOps.isUserLoggedIn())
+            firebaseOps.createUserListener(firebaseOps.getUserAuth()?.email ?: "")
     }
 }

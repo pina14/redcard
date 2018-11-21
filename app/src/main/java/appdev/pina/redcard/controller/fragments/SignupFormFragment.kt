@@ -83,7 +83,7 @@ class SignupFormFragment : Fragment() {
                                 val user = SignedUser(username, 0.0, App.firebaseOps.getUserAuth()?.email ?: "", refLink, referredBy)
                                 App.firebaseOps.createNewUser(username, user) { task ->
                                     if(task.isSuccessful) {
-                                        App.signedUser = user
+                                        App.setSignedUser(user)
 
                                         Snackbar.make(signup_button, "Created user!", Snackbar.LENGTH_LONG).show()
 

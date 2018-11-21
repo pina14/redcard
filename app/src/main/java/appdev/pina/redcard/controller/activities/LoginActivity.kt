@@ -9,7 +9,6 @@ import android.view.View
 import android.view.WindowManager
 import appdev.pina.redcard.R
 import appdev.pina.redcard.controller.App
-import appdev.pina.redcard.model.SignedUser
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import kotlinx.android.synthetic.main.activity_login.*
@@ -64,20 +63,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     }
                 }
 
-                App.firebaseOps.getUserWithEmail(App.firebaseOps.getUserAuth()!!.email!!) { userTask ->
-                    if(userTask.isSuccessful && userTask.result != null) {
-                        val docs = userTask.result!!.documents
-                        if(docs.isNotEmpty())
-                            App.signedUser = docs[0].toObject(SignedUser::class.java)
-
-                        Snackbar.make(login_layout, "Logged in!", Snackbar.LENGTH_LONG).show()
-
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    }
-                    else
-                        App.firebaseOps.logoutUser()
+                Intent(this, MainActivity::class.java).also { intent ->
+                    startActivity(intent)
+                    return@loginUser
                 }
             }
             else {

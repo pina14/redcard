@@ -14,5 +14,4 @@
                 android:id="@+id/previous"
                 android:icon="@drawable/ic_menu_slideshow"
                 android:title="Previous"/>
-
 </menu>

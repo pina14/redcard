@@ -55,8 +55,11 @@ class FirebaseOps {
     fun createUser(email: String, password: String, cb : (Task<AuthResult>) -> Unit) {
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if(task.isSuccessful)
-                createUserListener(email)
-            cb(task)
+                createUserListener(email){
+                    cb(task)
+                }
+            else
+                cb(task)
         }
     }
 
@@ -65,7 +68,7 @@ class FirebaseOps {
      */
     fun deleteUser(cb : (Task<Void?>) -> Unit) {
         getUserAuth()?.delete()?.addOnCompleteListener { task ->
-            userListener?.remove()
+            logoutUser()
             cb(task)
         }
     }
@@ -76,13 +79,16 @@ class FirebaseOps {
     fun loginUser(email: String, password: String, cb : (Task<AuthResult>) -> Unit) {
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if(task.isSuccessful)
-                createUserListener(email)
-            cb(task)
+                createUserListener(email) {
+                    cb(task)
+                }
+            else
+                cb(task)
         }
     }
 
     private var userListener : ListenerRegistration? = null
-    fun createUserListener(email: String) {
+    fun createUserListener(email: String, cb: () -> Unit = {}) {
         getUserWithEmail(email) { userTask ->
             if (userTask.isSuccessful && userTask.result != null) {
                 val docs = userTask.result!!.documents
@@ -105,6 +111,8 @@ class FirebaseOps {
                 }
             } else
                 logoutUser()
+
+            cb()
         }
     }
 
@@ -114,6 +122,7 @@ class FirebaseOps {
     fun logoutUser() {
         userListener?.remove()
         firebaseAuth.signOut()
+        App.setSignedUser(null)
     }
 
     /**

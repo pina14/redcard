@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/nav_welcome"
+            app:startDestination="@id/splashScreenFragment">
+
+    <fragment
+            android:id="@+id/splashScreenFragment"
+            android:name="appdev.pina.redcard.controller.fragments.SplashScreenFragment"
+            android:label="fragment_splash_screen"
+            tools:layout="@layout/fragment_splash_screen">
+        <action
+                android:id="@+id/action_splash_to_referral"
+                app:destination="@id/referralFragment">
+            <argument android:defaultValue="null" android:name="referredBy"/>
+        </action>
+        <action
+                android:id="@+id/action_splash_to_home"
+                app:destination="@id/home_item"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/referralFragment"
+            android:name="appdev.pina.redcard.controller.fragments.ReferralFragment" android:label="fragment_referral"
+            tools:layout="@layout/fragment_referral">
+        <argument android:name="referredBy" app:argType="string" android:defaultValue="null"/>
+        <action
+                android:id="@+id/action_referral_to_verifyEmail"
+                app:destination="@id/verifyEmailFragment"/>
+    </fragment>
+    <fragment
+            android:id="@+id/home_item"
+              android:name="appdev.pina.redcard.controller.fragments.HomeFragment"
+              android:label="HomeFragment"/>
+
+    <fragment
+            android:id="@+id/profile_item"
+            android:name="appdev.pina.redcard.controller.fragments.ProfileFragment"
+            android:label="ProfileFragment">
+        <action
+                android:id="@+id/action_profile_to_login"
+                app:destination="@id/nav_login"/>
+        <action
+                android:id="@+id/action_profile_to_home"
+                app:destination="@id/home_item"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/verifyEmailFragment"
+            android:name="appdev.pina.redcard.controller.fragments.VerifyEmailFragment"
+            android:label="fragment_verify_email"
+            tools:layout="@layout/fragment_verify_email">
+        <action
+                android:id="@+id/action_verifyEmail_to_profile"
+                app:destination="@id/profile_item"/>
+        <action
+                android:id="@+id/action_verifyEmail_to_home"
+                app:destination="@id/home_item"/>
+    </fragment>
+    <navigation android:id="@+id/nav_login"
+                app:startDestination="@id/loginFragment">
+        <fragment
+                android:id="@+id/signupFragment"
+                android:name="appdev.pina.redcard.controller.fragments.SignupFragment"
+                android:label="fragment_signup"
+                tools:layout="@layout/fragment_signup">
+            <action
+                    android:id="@+id/action_signup_to_login"
+                    app:destination="@id/loginFragment"/>
+        </fragment>
+        <fragment
+                android:id="@+id/loginFragment" android:name="appdev.pina.redcard.controller.fragments.LoginFragment"
+                android:label="fragment_login" tools:layout="@layout/fragment_login">
+            <action
+                    android:id="@+id/action_login_to_signup"
+                    app:destination="@id/signupFragment"/>
+        </fragment>
+
+        <action
+                android:id="@+id/action_show_profile"
+                app:destination="@id/profile_item"/>
+    </navigation>
+
+    <action
+            android:id="@+id/action_verify_email"
+            app:destination="@id/verifyEmailFragment"/>
+</navigation>

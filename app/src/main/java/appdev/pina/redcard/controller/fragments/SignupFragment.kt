@@ -7,9 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import appdev.pina.redcard.R
 
-class TodayFragment : Fragment() {
-
+class SignupFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_today, container, false)
+        return inflater.inflate(R.layout.fragment_signup, container, false)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        activity?.title = getString(R.string.title_signup)
     }
 }

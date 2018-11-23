@@ -1,21 +1,29 @@
-package appdev.pina.redcard.controller.activities
+package appdev.pina.redcard.controller.fragments
 
-import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import appdev.pina.redcard.R
 import appdev.pina.redcard.controller.App
-import kotlinx.android.synthetic.main.activity_verify_email.*
+import kotlinx.android.synthetic.main.fragment_verify_email.*
 
-class VerifyEmailActivity : AppCompatActivity() {
+class VerifyEmailFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_verify_email)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_verify_email, container, false)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         if(App.firebaseOps.isUserLoggedOut())
-            finish()
+            findNavController().navigate(R.id.action_verifyEmail_to_home)
+
+        activity?.title = getString(R.string.title_verify_email)
 
         val user = App.firebaseOps.getUserAuth()!!
 
@@ -33,12 +41,8 @@ class VerifyEmailActivity : AppCompatActivity() {
             App.firebaseOps.getUserAuth()?.reload()?.addOnCompleteListener { task ->
                 if(task.isSuccessful) {
                     val isVerified = App.firebaseOps.getUserAuth()?.isEmailVerified
-                    if(isVerified == true) {
-                        Intent(this, MainActivity::class.java).also { intent ->
-                            startActivity(intent)
-                            finish()
-                        }
-                    }
+                    if(isVerified == true)
+                        findNavController().navigate(R.id.action_verifyEmail_to_profile)
                     else
                         Snackbar.make(verify_email_layout, "Account is not yet verified!", Snackbar.LENGTH_LONG).show()
                 }

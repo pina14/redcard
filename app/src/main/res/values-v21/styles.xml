@@ -1,66 +1,5 @@
 <resources>
-
-    <style name="CIActivityThemeLightNoActionBar" parent="android:Theme.Material.NoActionBar">
-        <item name="primaryColor1">@color/lightPrimaryColor1</item>
-        <item name="primaryColor2">@color/lightPrimaryColor2</item>
-        <item name="primaryColor3">@color/lightPrimaryColor3</item>
-        <item name="secondaryColor1">@color/lightSecondaryColor1</item>
-        <item name="secondaryColor2">@color/lightSecondaryColor2</item>
-        <item name="secondaryColor3">@color/lightSecondaryColor3</item>
-        <item name="android:textColor">@color/lightPrimaryTextColor</item>
-        <item name="primaryTextColor">@color/lightPrimaryTextColor</item>
-        <item name="secondaryTextColor">@color/lightSecondaryTextColor</item>
-        <item name="tertiaryTextColor">@color/lightTertiaryTextColor</item>
-        <item name="backgroundColor">@color/lightBackgroundColor</item>
-        <item name="drawerIconColor">@color/lightDrawerIconColor</item>
-
-        <item name="android:colorBackground">@color/lightBackgroundColor</item>
-        <item name="android:colorForeground">@color/lightSecondaryColor3</item>
-        <item name="android:navigationBarColor">@color/lightPrimaryColor1</item>
-        <item name="android:statusBarColor">@color/lightPrimaryColor1</item>
-        <item name="android:textColorPrimary">@color/lightPrimaryTextColor</item>
-        <item name="android:textColorPrimaryInverse">@color/lightTertiaryTextColor</item>
-        <item name="android:textColorSecondary">@color/lightSecondaryTextColor</item>
-        <item name="android:textColorSecondaryInverse">@color/lightSecondaryTextColor</item>
-        <item name="android:windowBackground">@color/lightBackgroundColor</item>
-        <item name="android:buttonStyle">@style/CIButton</item>
-        <item name="android:dialogTheme">@style/DialogThemeLight</item>
-        <item name="android:popupBackground">@color/lightBackgroundColor</item>
-        <item name="colorPrimary">@color/lightPrimaryColor2</item>
-        <item name="colorPrimaryDark">@color/lightPrimaryColor1</item>
-        <item name="colorAccent">@color/lightColorAccent</item>
-    </style>
-
-    <style name="CIActivityThemeLightWithActionBar" parent="android:Theme.Material">
-        <item name="primaryColor1">@color/lightPrimaryColor1</item>
-        <item name="primaryColor2">@color/lightPrimaryColor2</item>
-        <item name="primaryColor3">@color/lightPrimaryColor3</item>
-        <item name="secondaryColor1">@color/lightSecondaryColor1</item>
-        <item name="secondaryColor2">@color/lightSecondaryColor2</item>
-        <item name="secondaryColor3">@color/lightSecondaryColor3</item>
-        <item name="android:textColor">@color/lightPrimaryTextColor</item>
-        <item name="primaryTextColor">@color/lightPrimaryTextColor</item>
-        <item name="secondaryTextColor">@color/lightSecondaryTextColor</item>
-        <item name="tertiaryTextColor">@color/lightTertiaryTextColor</item>
-        <item name="backgroundColor">@color/lightBackgroundColor</item>
-        <item name="drawerIconColor">@color/lightDrawerIconColor</item>
-
-        <item name="android:colorBackground">@color/lightBackgroundColor</item>
-        <item name="android:colorForeground">@color/lightSecondaryColor3</item>
-        <item name="android:textColorPrimary">@color/lightPrimaryTextColor</item>
-        <item name="android:textColorPrimaryInverse">@color/lightTertiaryTextColor</item>
-        <item name="android:textColorSecondary">@color/lightSecondaryTextColor</item>
-        <item name="android:textColorSecondaryInverse">@color/lightSecondaryTextColor</item>
-        <item name="android:windowBackground">@color/lightBackgroundColor</item>
-        <item name="android:buttonStyle">@style/CIButton</item>
-        <item name="android:dialogTheme">@style/DialogThemeLight</item>
-        <item name="android:popupBackground">@color/lightBackgroundColor</item>
-        <item name="colorPrimary">@color/lightPrimaryColor2</item>
-        <item name="colorPrimaryDark">@color/lightPrimaryColor1</item>
-        <item name="colorAccent">@color/lightColorAccent</item>
-    </style>
-
-    <style name="CIActivityThemeDarkNoActionBar" parent="Theme.AppCompat.NoActionBar">
+    <style name="RedcardThemeDarkNoActionBar" parent="Theme.AppCompat.NoActionBar">
         <item name="primaryColor1">@color/darkPrimaryColor1</item>
         <item name="primaryColor2">@color/darkPrimaryColor2</item>
         <item name="primaryColor3">@color/darkPrimaryColor3</item>
@@ -86,12 +25,12 @@
         <item name="android:textColorSecondary">@color/darkSecondaryTextColor</item>
         <item name="android:textColorSecondaryInverse">@color/darkSecondaryTextColor</item>
         <item name="android:windowBackground">@color/darkBackgroundColor</item>
-        <item name="android:buttonStyle">@style/CIButton</item>
+        <item name="android:buttonStyle">@style/CustomButton</item>
         <item name="android:dialogTheme">@style/DialogThemeDark</item>
         <item name="android:popupBackground">@color/darkBackgroundColor</item>
     </style>
 
-    <style name="CIActivityThemeDarkWithActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="RedcardThemeDarkWithActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="primaryColor1">@color/darkPrimaryColor1</item>
         <item name="primaryColor2">@color/darkPrimaryColor2</item>
         <item name="primaryColor3">@color/darkPrimaryColor3</item>
@@ -115,7 +54,7 @@
         <item name="android:textColorSecondary">@color/darkSecondaryTextColor</item>
         <item name="android:textColorSecondaryInverse">@color/darkSecondaryTextColor</item>
         <item name="android:windowBackground">@color/darkBackgroundColor</item>
-        <item name="android:buttonStyle">@style/CIButton</item>
+        <item name="android:buttonStyle">@style/CustomButton</item>
         <item name="android:dialogTheme">@style/DialogThemeDark</item>
         <item name="android:popupBackground">@color/darkBackgroundColor</item>
     </style>

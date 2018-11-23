@@ -1,6 +1,5 @@
 package appdev.pina.redcard.controller.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -9,11 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.navigation.fragment.findNavController
 import appdev.pina.redcard.R
 import appdev.pina.redcard.controller.App
-import appdev.pina.redcard.controller.activities.LoginActivity
-import appdev.pina.redcard.controller.activities.ReferralActivity
-import appdev.pina.redcard.controller.activities.VerifyEmailActivity
 import appdev.pina.redcard.firebase.FirebaseOps
 import appdev.pina.redcard.model.SignedUser
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -22,7 +19,6 @@ import kotlinx.android.synthetic.main.fragment_signup_form.*
 class SignupFormFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_signup_form, container, false)
     }
 
@@ -34,9 +30,7 @@ class SignupFormFragment : Fragment() {
         }
 
         login_text.setOnClickListener{
-            val intent = Intent(context, LoginActivity::class.java)
-            startActivity(intent)
-            activity?.finish()
+            findNavController().navigate(R.id.action_signup_to_login)
         }
     }
 
@@ -76,21 +70,17 @@ class SignupFormFragment : Fragment() {
                             signup_progress_bar.visibility = View.GONE
 
                             if(task.isSuccessful) {
-                                var referredBy: String? = null
-                                if (activity is ReferralActivity)
-                                    referredBy = (activity as ReferralActivity).referredBy
-
-                                val user = SignedUser(username, 0.0, App.firebaseOps.getUserAuth()?.email ?: "", refLink, referredBy)
-                                App.firebaseOps.createNewUser(username, user) { task ->
-                                    if(task.isSuccessful) {
+                                //TODO
+//                                val referredBy: String? = activity?.intent?.extras?.getString(FirebaseOps.REFERRED_BY_LABEL)
+//                                val referredBy = ReferralFragmentArgs.fromBundle(arguments).referredBy
+                                val user = SignedUser(username, 0.0, App.firebaseOps.getUserAuth()?.email ?: "", refLink, null)
+                                App.firebaseOps.createNewUser(username, user) { userTask ->
+                                    if(userTask.isSuccessful) {
                                         App.setSignedUser(user)
 
                                         Snackbar.make(signup_button, "Created user!", Snackbar.LENGTH_LONG).show()
 
-                                        Intent(context, VerifyEmailActivity::class.java).also { intent ->
-                                            startActivity(intent)
-                                            activity?.finish()
-                                        }
+                                        findNavController().navigate(R.id.action_verify_email)
                                     } else
                                         Snackbar.make(signup_button, "Error creating user!", Snackbar.LENGTH_LONG).show()
                                 }

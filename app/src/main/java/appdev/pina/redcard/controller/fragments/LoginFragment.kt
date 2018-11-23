@@ -1,42 +1,38 @@
-package appdev.pina.redcard.controller.activities
+package appdev.pina.redcard.controller.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment
 import android.util.Patterns
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.navigation.fragment.findNavController
 import appdev.pina.redcard.R
 import appdev.pina.redcard.controller.App
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.content_login.*
+import kotlinx.android.synthetic.main.fragment_login.*
 
-class LoginActivity : AppCompatActivity(), View.OnClickListener {
+class LoginFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-        setSupportActionBar(toolbar)
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        login_button.setOnClickListener(this)
-        signup_text.setOnClickListener(this)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
-    override fun onClick(view: View) {
-        when (view.id) {
-            R.id.login_button -> {
-                signinUser()
-            }
-            R.id.signup_text -> {
-                val intent = Intent(this, SignupActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        activity?.title = getString(R.string.title_login)
+
+
+        login_button.setOnClickListener{
+            signinUser()
+        }
+
+        signup_text.setOnClickListener{
+            findNavController().navigate(R.id.action_login_to_signup)
         }
     }
 
@@ -48,29 +44,23 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             return
 
         login_progress_bar.visibility = View.VISIBLE
-        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        activity?.apply {window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)}
 
 
         App.firebaseOps.loginUser(email, password) { task ->
             login_progress_bar.visibility = View.GONE
-            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+            activity?.apply {window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)}
 
             if(task.isSuccessful) {
-                if(task.result?.user?.isEmailVerified == false){
-                    Intent(this, VerifyEmailActivity::class.java).also { intent ->
-                        startActivity(intent)
-                        return@loginUser
-                    }
-                }
-
-                Intent(this, MainActivity::class.java).also { intent ->
-                    startActivity(intent)
-                    return@loginUser
-                }
+                if(task.result?.user?.isEmailVerified == false)
+                    findNavController().navigate(R.id.action_verify_email)
+                else
+                    findNavController().navigate(R.id.action_show_profile)
             }
             else {
                 if(task.exception is FirebaseAuthInvalidUserException ||
-                    task.exception is FirebaseAuthInvalidCredentialsException)
+                    task.exception is FirebaseAuthInvalidCredentialsException
+                )
                     Snackbar.make(login_layout, "Wrong credentials!", Snackbar.LENGTH_LONG).show()
                 else
                     Snackbar.make(login_layout, "Error logging in!", Snackbar.LENGTH_LONG).show()
@@ -101,5 +91,4 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
         return error
     }
-
 }

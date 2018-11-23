@@ -2,71 +2,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="appdev.pina.redcard">
 
-    <application
-            android:name=".controller.App"
-            android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_launcher_round"
-            android:supportsRtl="true"
-            android:theme="@style/CIActivityThemeDarkWithActionBar">
-        <activity
-                android:name=".controller.activities.SplashScreenActivity"
-                android:theme="@style/AppCompat.FullScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+<application
+        android:name=".controller.App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/RedcardThemeDarkWithActionBar">
+    <activity
+            android:name=".controller.activities.MainActivity"
+            android:theme="@style/RedcardThemeDarkNoActionBar">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-
-                <data
-                        android:host="redcardapp.page.link"
-                        android:scheme="http"/>
-                <data
-                        android:host="redcardapp.page.link"
-                        android:scheme="https"/>
-                <data
-                        android:host="hugofora.wixsite.com/crypto-imperium-app"
-                        android:scheme="http"/>
-                <data
-                        android:host="hugofora.wixsite.com/crypto-imperium-app"
-                        android:scheme="https"/>
-            </intent-filter>
-        </activity>
-        <activity
-                android:name=".controller.activities.MainActivity"
-                android:theme="@style/CIActivityThemeDarkNoActionBar"/>
-        <activity
-                android:name=".controller.activities.SignupActivity"
-                android:label="@string/title_activity_signup"
-                android:parentActivityName=".controller.activities.MainActivity"
-                android:theme="@style/CIActivityThemeDarkNoActionBar">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="appdev.pina.redcard.controller.activities.MainActivity"/>
-        </activity>
-        <activity
-                android:name=".controller.activities.LoginActivity"
-                android:label="@string/title_activity_login"
-                android:parentActivityName=".controller.activities.MainActivity"
-                android:theme="@style/CIActivityThemeDarkNoActionBar">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="appdev.pina.redcard.controller.activities.MainActivity"/>
-        </activity>
-        <activity
-                android:name=".controller.activities.ReferralActivity"
-                android:label="@string/title_activity_referral"
-                android:theme="@style/CIActivityThemeDarkWithActionBar"/>
-        <activity
-                android:name=".controller.activities.VerifyEmailActivity"
-                android:label="@string/title_activity_verify_email"
-                android:theme="@style/CIActivityThemeDarkWithActionBar"/>
-    </application>
-
+            <category android:name="android.intent.category.LAUNCHER"/>
+        </intent-filter>
+    </activity>
+</application>
 </manifest>

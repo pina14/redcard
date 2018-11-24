@@ -12,4 +12,6 @@ class ReferralFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_referral, container, false)
     }
+
+    fun getReferredBy () : String? = ReferralFragmentArgs.fromBundle(arguments).referredBy
 }

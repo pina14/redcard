@@ -15,8 +15,11 @@ import appdev.pina.redcard.firebase.FirebaseOps
 import appdev.pina.redcard.model.SignedUser
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import kotlinx.android.synthetic.main.fragment_signup_form.*
+import android.content.Context
 
 class SignupFormFragment : Fragment() {
+
+    var referredBy : String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_signup_form, container, false)
@@ -32,6 +35,13 @@ class SignupFormFragment : Fragment() {
         login_text.setOnClickListener{
             findNavController().navigate(R.id.action_signup_to_login)
         }
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        if(parentFragment is ReferralFragment)
+            referredBy = (parentFragment as ReferralFragment).getReferredBy()
     }
 
     private fun registerUser() {
@@ -70,10 +80,7 @@ class SignupFormFragment : Fragment() {
                             signup_progress_bar.visibility = View.GONE
 
                             if(task.isSuccessful) {
-                                //TODO
-//                                val referredBy: String? = activity?.intent?.extras?.getString(FirebaseOps.REFERRED_BY_LABEL)
-//                                val referredBy = ReferralFragmentArgs.fromBundle(arguments).referredBy
-                                val user = SignedUser(username, 0.0, App.firebaseOps.getUserAuth()?.email ?: "", refLink, null)
+                                val user = SignedUser(username, 0.0, App.firebaseOps.getUserAuth()?.email ?: "", refLink, referredBy)
                                 App.firebaseOps.createNewUser(username, user) { userTask ->
                                     if(userTask.isSuccessful) {
                                         App.setSignedUser(user)
@@ -124,7 +131,7 @@ class SignupFormFragment : Fragment() {
 
         //password checks
         if (password.isEmpty()) {
-            signup_user_password_edit_text.error = "Email is required!"
+            signup_user_password_edit_text.error = "Password is required!"
             error = true
         }
         else if (password.length < 6) {
